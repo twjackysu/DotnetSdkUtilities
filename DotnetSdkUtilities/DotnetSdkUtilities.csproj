@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+		<ApplicationIcon />
+		<StartupObject />
+		<Authors>JackySu</Authors>
+		<Company>JackySu</Company>
+		<Copyright>MIT License</Copyright>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<RepositoryUrl>https://github.com/twjackysu/DotnetSdkUtilities</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<Version>1.0.0</Version>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+</Project>
