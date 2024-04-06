@@ -7,5 +7,5 @@ This is a general utility I often use that is not part of the Extensions class. 
 For anything related to Extensions, please look inside [JackySuExtensions](https://github.com/twjackysu/JackySuExtensions/).
 
 ---
-1. [ResponseFactory](https://github.com/twjackysu/JackySuExtensions/blob/master/DotnetSdkUtilities/Factory/ResponseFactory/README.md)
+1. [ResponseFactory](https://github.com/twjackysu/DotnetSdkUtilities/blob/master/DotnetSdkUtilities/Factory/ResponseFactory/README.md)
 
