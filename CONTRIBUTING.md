@@ -1,3 +1,5 @@
+[README](https://github.com/twjackysu/DotnetSdkUtilities/blob/master/README.md)
+
 # Contributing to DotnetSdkUtilities
 
 Thank you for your interest in contributing to DotnetSdkUtilities! This guide outlines the contribution process for our project and how you can help. Your contributions are essential for making this project great.
