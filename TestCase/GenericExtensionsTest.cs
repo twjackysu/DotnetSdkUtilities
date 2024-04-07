@@ -1,7 +1,7 @@
 ﻿using DotnetSdkUtilities.GenericExtensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace DotnetSdkUtilities.GenericExtensionsTestCase
+namespace TestCase
 {
     public class YourObj
     {

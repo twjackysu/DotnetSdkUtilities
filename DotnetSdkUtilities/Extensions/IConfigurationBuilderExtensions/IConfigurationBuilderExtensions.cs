@@ -14,7 +14,7 @@ namespace DotnetSdkUtilities.IConfigurationBuilderExtensions
 {
     // ref: https://stackoverflow.com/questions/36062670/encrypted-configuration-in-asp-net-core
     /// <summary>Provides extensions concerning <see cref="ProtectedJsonConfigurationProvider"/></summary>
-    public static class ProtectedJsonConfigurationProviderExtensions
+    public static class IConfigurationBuilderExtensions
     {
         /// <summary>Adds a protected JSON file</summary>
         /// <param name="configurationBuilder"><see cref="IConfigurationBuilder"/> in which to apply the JSON file</param>

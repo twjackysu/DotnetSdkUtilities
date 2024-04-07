@@ -1,8 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DotnetSdkUtilities.StringExtensions;
+﻿using DotnetSdkUtilities.StringExtensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TestCase
 {
