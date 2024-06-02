@@ -177,5 +177,20 @@ namespace DotnetSdkUtilities.ObjectExtensions
 
             return string.Join(",", parts);
         }
+        /// <summary>
+        /// Checks if the object has a property with the specified name.
+        /// </summary>
+        /// <param name="obj">The object to check.</param>
+        /// <param name="propertyName">The name of the property to look for.</param>
+        /// <returns>True if the object has a property with the specified name, otherwise false.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when obj or propertyName is null.</exception>
+        public static bool HasProperty(this object obj, string propertyName)
+        {
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
+            if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
+
+            var type = obj.GetType();
+            return type.GetProperty(propertyName) != null;
+        }
     }
 }

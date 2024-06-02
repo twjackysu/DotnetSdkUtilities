@@ -23,4 +23,11 @@ Get the Cache key (string) from any object
 var obj = new { Name = "John", Age = 30 };
 string cacheKey = obj.ToCacheKey();
 ```
+
+### HasProperty
+This function checks if a specific property exists in an object.
+```csharp
+var obj = new { Name = "John", Age = 30 };
+bool hasProperty = obj.HasProperty("Name");
+```
 For complex cases, please refer to the [test case](https://github.com/twjackysu/DotnetSdkUtilities/blob/master/TestCase/ObjectExtensionsTest.cs)

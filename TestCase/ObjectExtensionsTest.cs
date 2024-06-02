@@ -1,5 +1,6 @@
 ﻿using DotnetSdkUtilities.ObjectExtensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 
 namespace TestCase
@@ -140,6 +141,40 @@ namespace TestCase
 
             Assert.AreEqual("apple=10,banana=yellow,orange=AA=1,BB=333,CC=1,3,4,DD=EE=3,FF=222,GG=1,2,4", myDict.ToCacheKey());
         }
+        [TestMethod]
+        public void HasProperty_WithExistingProperty_ReturnsTrue()
+        {
+            var person = new Person { Name = "Alice", Age = 30 };
+            Assert.IsTrue(person.HasProperty("Name"));
+        }
+
+        [TestMethod]
+        public void HasProperty_WithNonExistingProperty_ReturnsFalse()
+        {
+            var person = new Person { Name = "Alice", Age = 30 };
+            Assert.IsFalse(person.HasProperty("Height"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void HasProperty_WithNullObject_ThrowsArgumentNullException()
+        {
+            Person person = null;
+            person.HasProperty("Name");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void HasProperty_WithNullPropertyName_ThrowsArgumentNullException()
+        {
+            var person = new Person { Name = "Alice", Age = 30 };
+            person.HasProperty(null);
+        }
+    }
+    public class Person
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
     }
     public class A
     {
