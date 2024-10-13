@@ -144,17 +144,23 @@ namespace DotnetSdkUtilities.ObjectExtensions
             var type = obj.GetType();
             if (type.IsValueType || obj is string)
             {
+                if (type.GetProperty("Key") != null && type.GetProperty("Value") != null)
+                {
+                    var key = type.GetProperty("Key").GetValue(obj);
+                    var value = type.GetProperty("Value").GetValue(obj);
+                    return $"{key}_{ToCacheKey(value)}";
+                }
                 return obj.ToString();
             }
 
-            if (obj is Array array)
+            if (obj is IEnumerable enumerable)
             {
-                var arrayParts = new List<string>();
-                foreach (var item in array)
+                var enumerableParts = new List<string>();
+                foreach (var item in enumerable)
                 {
-                    arrayParts.Add(ToCacheKey(item));
+                    enumerableParts.Add(ToCacheKey(item));
                 }
-                return string.Join(",", arrayParts);
+                return string.Join(",", enumerableParts);
             }
 
             if (obj is IDictionary dictionary)

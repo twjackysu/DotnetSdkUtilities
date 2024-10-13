@@ -139,7 +139,42 @@ namespace TestCase
                 {"orange", obj}
             };
 
-            Assert.AreEqual("apple=10,banana=yellow,orange=AA=1,BB=333,CC=1,3,4,DD=EE=3,FF=222,GG=1,2,4", myDict.ToCacheKey());
+            Assert.AreEqual("apple_10,banana_yellow,orange_AA=1,BB=333,CC=1,3,4,DD=EE=3,FF=222,GG=1,2,4", myDict.ToCacheKey());
+        }
+
+        [TestMethod]
+        public void ShouldParseIEnumerableObject()
+        {
+            var enumerable = new List<int> { 1, 2, 3, 4, 5 };
+
+            Assert.AreEqual("1,2,3,4,5", enumerable.ToCacheKey());
+        }
+
+        [TestMethod]
+        public void ShouldParseKeyValuePairEnumerableObject()
+        {
+            var obj = new
+            {
+                AA = 1,
+                BB = "333",
+                CC = new int[] { 1, 3, 4 },
+                DD = new
+                {
+                    EE = 3,
+                    FF = "222",
+                    GG = new int[] { 1, 2, 4 }
+                }
+            };
+            var item01 = new KeyValuePair<string, int>("apple", 10);
+            var item02 = new KeyValuePair<string, string>("banana", "yellow");
+            var item03 = new KeyValuePair<string, object>("orange", obj);
+            var enumerable = new List<dynamic>
+            {
+                item01,
+                item02,
+                item03
+            };
+            Assert.AreEqual("apple_10,banana_yellow,orange_AA=1,BB=333,CC=1,3,4,DD=EE=3,FF=222,GG=1,2,4", enumerable.ToCacheKey());
         }
         [TestMethod]
         public void HasProperty_WithExistingProperty_ReturnsTrue()
