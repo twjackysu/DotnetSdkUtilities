@@ -1,6 +1,6 @@
 ﻿// using Microsoft.Extensions.DependencyInjection;
 
-namespace DotnetSdkUtilities.ServiceCollectionExtensions
+namespace DotnetSdkUtilities.Extensions.ServiceCollectionExtensions
 {
     public static class ServiceCollectionExtensions
     {

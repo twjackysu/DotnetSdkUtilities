@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using DotnetSdkUtilities.TypeExtensions;
+using DotnetSdkUtilities.Extensions.TypeExtensions;
 
-namespace DotnetSdkUtilities.IEnumerableExtensions
+namespace DotnetSdkUtilities.Extensions.IEnumerableExtensions
 {
     public static class IEnumerableExtensions
     {

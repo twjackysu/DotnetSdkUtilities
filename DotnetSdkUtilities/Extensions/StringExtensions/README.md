@@ -4,7 +4,7 @@
 
 You can simply encrypt and decrypt string or byte with a key. (Symmetric encryption)
 ```csharp
-using DotnetSdkUtilities.StringExtensions;
+using DotnetSdkUtilities.Extensions.StringExtensions;
 ```
 
 try this and see how to write this code

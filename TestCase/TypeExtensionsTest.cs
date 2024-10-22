@@ -1,4 +1,4 @@
-﻿using DotnetSdkUtilities.TypeExtensions;
+﻿using DotnetSdkUtilities.Extensions.TypeExtensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

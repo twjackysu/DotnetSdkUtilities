@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace DotnetSdkUtilities.ObjectExtensions
+namespace DotnetSdkUtilities.Extensions.ObjectExtensions
 {
     public static class ObjectExtensions
     {
@@ -198,5 +198,6 @@ namespace DotnetSdkUtilities.ObjectExtensions
             var type = obj.GetType();
             return type.GetProperty(propertyName) != null;
         }
+
     }
 }

@@ -4,7 +4,7 @@
 
 You can get the item with the max property from any object that has IEnumerable implementation.
 ```csharp
-using DotnetSdkUtilities.IEnumerableExtensions;
+using DotnetSdkUtilities.Extensions.IEnumerableExtensions;
 ```
 
 try

@@ -1,12 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using DotnetSdkUtilities.Extensions.IConfigurationBuilderExtensions;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using DotnetSdkUtilities.IConfigurationBuilderExtensions;
-using System.Threading.Tasks;
 
 namespace TestCase
 {

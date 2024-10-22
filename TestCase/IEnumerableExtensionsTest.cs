@@ -1,4 +1,4 @@
-﻿using DotnetSdkUtilities.IEnumerableExtensions;
+﻿using DotnetSdkUtilities.Extensions.IEnumerableExtensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;

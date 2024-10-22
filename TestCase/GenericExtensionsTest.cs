@@ -1,19 +1,21 @@
-﻿using DotnetSdkUtilities.GenericExtensions;
+﻿using DotnetSdkUtilities.Extensions.GenericExtensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace TestCase
 {
-    public class YourObj
+    #region EqualsExt Test Classes
+    internal class YourObj
     {
         public string P1 { get; set; }
         public int P2 { get; set; }
         public YourObj2 P3 { get; set; }
     }
-    public class YourObj2
+    internal class YourObj2
     {
         public int P1 { get; set; }
         public int P2 { get; set; }
     }
+    #endregion
     [TestClass]
     public class GenericExtensionsTest
     {

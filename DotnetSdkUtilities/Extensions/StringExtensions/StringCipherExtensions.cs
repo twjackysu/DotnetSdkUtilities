@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace DotnetSdkUtilities.StringExtensions
+namespace DotnetSdkUtilities.Extensions.StringExtensions
 {
     //ref: https://stackoverflow.com/questions/10168240/encrypting-decrypting-a-string-in-c-sharp
     public static class StringCipherExtensions

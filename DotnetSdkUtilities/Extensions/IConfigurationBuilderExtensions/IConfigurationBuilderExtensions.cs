@@ -1,4 +1,4 @@
-﻿using DotnetSdkUtilities.StringExtensions;
+﻿using DotnetSdkUtilities.Extensions.StringExtensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Newtonsoft.Json;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace DotnetSdkUtilities.IConfigurationBuilderExtensions
+namespace DotnetSdkUtilities.Extensions.IConfigurationBuilderExtensions
 {
     // ref: https://stackoverflow.com/questions/36062670/encrypted-configuration-in-asp-net-core
     /// <summary>Provides extensions concerning <see cref="ProtectedJsonConfigurationProvider"/></summary>

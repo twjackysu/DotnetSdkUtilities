@@ -4,7 +4,7 @@
 
 A quick way to encrypt specific fields in appsettings.json for .NET Core
 ```csharp
-using DotnetSdkUtilities.IConfigurationBuilderExtensions;
+using DotnetSdkUtilities.Extensions.IConfigurationBuilderExtensions;
 ```
 In fact, this refers to the practice on the Internet and makes some modifications to make it easier to use on .NET Core, and has not done a complete security assessment. Sometimes security and convenience are mutually exclusive, please choose the best a way that suits your convenience and part of the security.
 

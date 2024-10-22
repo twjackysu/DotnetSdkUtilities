@@ -6,7 +6,7 @@
 
 You can get or set property from an object by a string path.
 ```csharp
-using DotnetSdkUtilities.ObjectExtensions;
+using DotnetSdkUtilities.Extensions.ObjectExtensions;
 ```
 
 try this and see how to write this code

@@ -1,8 +1,8 @@
-﻿using DotnetSdkUtilities.TypeExtensions;
+﻿using DotnetSdkUtilities.Extensions.TypeExtensions;
 using System;
 using System.Reflection;
 
-namespace DotnetSdkUtilities.GenericExtensions
+namespace DotnetSdkUtilities.Extensions.GenericExtensions
 {
     public static class GenericExtensions
     {

@@ -7,10 +7,10 @@ Do you want to compare two objects equal?
 try this
 
 ```csharp
-using DotnetSdkUtilities.Extensions.GenericExtensions;
+using DotnetSdkUtilities.Extensions.DateTimeExtensions;
 ```
 
 then
 ```csharp
-bool isEqual = yourObject1.EqualsExt(yourObject2);
+ulong epochMilliseconds = yourDateTime.ToEpochMilliseconds();
 ```

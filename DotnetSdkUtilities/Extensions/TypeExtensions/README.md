@@ -5,7 +5,7 @@
 Do you want to check if a type implements a generic interface?
 
 ```csharp
-using DotnetSdkUtilities.TypeExtensions;
+using DotnetSdkUtilities.Extensions.TypeExtensions;
 ```
 
 then
