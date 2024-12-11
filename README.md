@@ -18,6 +18,7 @@ DotnetSdkUtilities is an open-source project focused on providing a suite of com
 5. [StringExtensions](https://github.com/twjackysu/DotnetSdkUtilities/blob/master/DotnetSdkUtilities/Extensions/StringExtensions/README.md)
 6. [TypeExtensions](https://github.com/twjackysu/DotnetSdkUtilities/blob/master/DotnetSdkUtilities/Extensions/TypeExtensions/README.md)
 7. [DateTimeExtensions](https://github.com/twjackysu/DotnetSdkUtilities/blob/master/DotnetSdkUtilities/Extensions/DateTimeExtensions/README.md)
+8. [ServiceCollectionExtensions](https://github.com/twjackysu/DotnetSdkUtilities/blob/master/DotnetSdkUtilities/Extensions/ServiceCollectionExtensions/README.md)
 
 
 ## How to Contribute
