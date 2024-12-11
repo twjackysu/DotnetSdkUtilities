@@ -10,7 +10,7 @@ ExtendedMemoryCache is a custom implementation of IMemoryCache that tracks cache
 
 - Retrieve all cache keys using the `Keys` property.
 
-- Clear cache entries by a specific key pattern using `ClearCacheByPattern`.
+- Clear cache entries by a specific key pattern using `ClearCacheByContains`.
 
 - Fully compatible with .NET `MemoryCache` features.
 
@@ -50,22 +50,19 @@ ExtendedMemoryCache is a custom implementation of IMemoryCache that tracks cache
 
             // Retrieve all keys
             var keys = _cache.Keys;
-
-            // Remove entries by pattern
-            _cache.ClearCacheByPattern("key");
         }
     }
     ```
-3. Clear Cache by Pattern
+3. Clear Cache by Keys Contains
 
-    Use the ClearCacheByPattern method to remove cache entries that match a specific pattern.
+    Use the `ClearCacheByContains` method to remove cache entries that match a specific pattern.
 
     Example
 
     Suppose your cache keys are structured with user identifiers (e.g., user:123:page:1). If you want to clear all cache entries for user 123:
     ```csharp
     // Clear all entries for user 123
-    cache.ClearCacheByPattern("user:123");
+    cache.ClearCacheByContains("user:123");
     ```
 
 ## Notes
