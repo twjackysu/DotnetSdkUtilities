@@ -6,7 +6,8 @@ DotnetSdkUtilities is an open-source project focused on providing a suite of com
 
 ---
 
-1. [ResponseFactory](https://github.com/twjackysu/DotnetSdkUtilities/blob/master/DotnetSdkUtilities/Factory/ResponseFactory/README.md)
+1. [QueryLanguageGeneratorFactory - (in progress)](https://github.com/twjackysu/DotnetSdkUtilities/blob/master/DotnetSdkUtilities/Factory/QueryLanguageGeneratorFactory/README.md)
+2. [ResponseFactory](https://github.com/twjackysu/DotnetSdkUtilities/blob/master/DotnetSdkUtilities/Factory/ResponseFactory/README.md)
 
 
 ### Extensions
