@@ -1,6 +1,7 @@
 # DotnetSdkUtilities
 [![NuGet version (DotnetSdkUtilities)](https://img.shields.io/nuget/v/DotnetSdkUtilities.svg?style=flat-square)](https://www.nuget.org/packages/DotnetSdkUtilities/)
 ![Publish Status](https://github.com/twjackysu/DotnetSdkUtilities/actions/workflows/nuget-publish.yml/badge.svg)
+![CI Status](https://github.com/twjackysu/DotnetSdkUtilities/actions/workflows/ci.yml/badge.svg)
 
 DotnetSdkUtilities is an open-source project focused on providing a suite of common utilities for the .NET ecosystem. Our goal is to streamline the development process for .NET developers by offering a collection of tools and libraries that address common tasks and challenges. Whether it's simplifying data access, enhancing security practices, optimizing performance, or providing reusable components for user interface design, DotnetSdkUtilities aims to be the go-to resource that helps developers build robust, efficient, and scalable .NET applications with ease.
 
