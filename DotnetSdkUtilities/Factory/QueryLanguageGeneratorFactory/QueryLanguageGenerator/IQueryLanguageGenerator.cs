@@ -7,9 +7,9 @@ namespace DotnetSdkUtilities.Factory.QueryLanguageGeneratorFactory.QueryLanguage
     public interface IQueryLanguageGenerator
     {
         QueryDefinition GenerateSummarizeQuery(QuerySource source, IEnumerable<IViewByField> viewByFields, IEnumerable<IFilterField> filterFields, IEnumerable<IMeasurementField> measurementFields);
-        QueryDefinition GenerateRawDataListQuery();
-        QueryDefinition GenerateAllFieldsQuery();
+        QueryDefinition GenerateRawDataListQuery(QuerySource source, IEnumerable<IViewByField> viewByFields, IEnumerable<IFilterField> filterFields);
+        QueryDefinition GenerateAllFieldsQuery(QuerySource source, IEnumerable<string> excludedFields = null);
         QueryDefinition GenerateLatestDataDateQuery();
-        QueryDefinition GenerateFieldValuesQuery();
+        QueryDefinition GenerateFieldValuesQuery(QuerySource source, string fieldName, IEnumerable<IFilterField> filterFields = null);
     }
 }

@@ -21,19 +21,39 @@ namespace DotnetSdkUtilities.Factory.QueryLanguageGeneratorFactory.QueryLanguage
             return new QueryDefinition(queryText, source.Parameters);
         }
 
-        public QueryDefinition GenerateSummarizeQuery()
+        public QueryDefinition GenerateRawDataListQuery(QuerySource source, IEnumerable<IViewByField> viewByFields, IEnumerable<IFilterField> filterFields)
         {
-            return new QueryDefinition("KQL Summarize Query", new List<IQueryParameter>());
+            var selectClause = string.Join(", ", viewByFields.Select(f => f.Name));
+            var filterClause = string.Join(" and ", filterFields.Select(f => $"{f.Name} in ({string.Join(", ", f.SpecifiedValues.Select(v => $"'{v}'"))})"));
+
+            var queryText = $"{source.Name}";
+            if (!string.IsNullOrEmpty(filterClause))
+            {
+                queryText += $" | where {filterClause}";
+            }
+            if (!string.IsNullOrEmpty(selectClause))
+            {
+                queryText += $" | project {selectClause}";
+            }
+
+            return new QueryDefinition(queryText, source.Parameters);
         }
 
-        public QueryDefinition GenerateRawDataListQuery()
+        public QueryDefinition GenerateAllFieldsQuery(QuerySource source, IEnumerable<string> excludedFields = null)
         {
-            return new QueryDefinition("KQL Raw Data List Query", new List<IQueryParameter>());
-        }
+            var excludedFieldsSet = excludedFields?.ToHashSet() ?? new HashSet<string>();
+            
+            var queryText = $"{source.Name} | getschema";
+            
+            if (excludedFieldsSet.Any())
+            {
+                var excludedFieldsStr = string.Join(", ", excludedFieldsSet.Select(f => $"'{f}'"));
+                queryText += $" | where ColumnName !in ({excludedFieldsStr})";
+            }
+            
+            queryText += " | project ColumnName, DataType";
 
-        public QueryDefinition GenerateAllFieldsQuery()
-        {
-            return new QueryDefinition("KQL All Fields Query", new List<IQueryParameter>());
+            return new QueryDefinition(queryText, source.Parameters);
         }
 
         public QueryDefinition GenerateLatestDataDateQuery()
@@ -41,9 +61,23 @@ namespace DotnetSdkUtilities.Factory.QueryLanguageGeneratorFactory.QueryLanguage
             return new QueryDefinition("KQL Latest Data Date Query", new List<IQueryParameter>());
         }
 
-        public QueryDefinition GenerateFieldValuesQuery()
+        public QueryDefinition GenerateFieldValuesQuery(QuerySource source, string fieldName, IEnumerable<IFilterField> filterFields = null)
         {
-            return new QueryDefinition("KQL Field Values Query", new List<IQueryParameter>());
+            var queryText = $"{source.Name}";
+
+            if (filterFields != null && filterFields.Any())
+            {
+                var filterClause = string.Join(" and ", filterFields.Select(f => $"{f.Name} in ({string.Join(", ", f.SpecifiedValues.Select(v => $"'{v}'"))})"));
+                queryText += $" | where {filterClause}";
+            }
+
+            queryText += $" | summarize Values = make_set({fieldName})";
+            
+            queryText += " | mv-expand Values";
+            
+            queryText += " | project Value = Values | sort by Value asc";
+
+            return new QueryDefinition(queryText, source.Parameters);
         }
     }
 }

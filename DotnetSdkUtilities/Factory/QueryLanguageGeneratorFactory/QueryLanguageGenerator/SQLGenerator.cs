@@ -21,14 +21,43 @@ namespace DotnetSdkUtilities.Factory.QueryLanguageGeneratorFactory.QueryLanguage
             return new QueryDefinition(queryText, source.Parameters);
         }
 
-        public QueryDefinition GenerateRawDataListQuery()
+        public QueryDefinition GenerateRawDataListQuery(QuerySource source, IEnumerable<IViewByField> viewByFields, IEnumerable<IFilterField> filterFields)
         {
-            return new QueryDefinition("SQL Raw Data List Query", new List<IQueryParameter>());
+            var selectClause = viewByFields.Any() ? string.Join(", ", viewByFields.Select(f => f.Name)) : "*";
+            var filterClause = string.Join(" AND ", filterFields.Select(f => $"{f.Name} IN ({string.Join(", ", f.SpecifiedValues.Select(v => $"'{v}'"))})"));
+
+            var queryText = $"SELECT {selectClause} FROM {source.Name}";
+            if (!string.IsNullOrEmpty(filterClause))
+            {
+                queryText += $" WHERE {filterClause}";
+            }
+
+            return new QueryDefinition(queryText, source.Parameters);
         }
 
-        public QueryDefinition GenerateAllFieldsQuery()
+        public QueryDefinition GenerateAllFieldsQuery(QuerySource source, IEnumerable<string> excludedFields = null)
         {
-            return new QueryDefinition("SQL All Fields Query", new List<IQueryParameter>());
+            var excludedFieldsSet = excludedFields?.ToHashSet() ?? new HashSet<string>();
+            
+            // 使用 INFORMATION_SCHEMA.COLUMNS 來獲取所有欄位資訊
+            var queryText = $@"
+                SELECT 
+                    COLUMN_NAME as ColumnName, 
+                    DATA_TYPE as DataType
+                FROM INFORMATION_SCHEMA.COLUMNS 
+                WHERE TABLE_NAME = '{source.Name}'";
+
+            // 如果有需要排除的欄位，添加 WHERE 子句
+            if (excludedFieldsSet.Any())
+            {
+                var excludedFieldsStr = string.Join(", ", excludedFieldsSet.Select(f => $"'{f}'"));
+                queryText += $" AND COLUMN_NAME NOT IN ({excludedFieldsStr})";
+            }
+
+            // 按欄位名稱排序
+            queryText += " ORDER BY COLUMN_NAME";
+
+            return new QueryDefinition(queryText, source.Parameters);
         }
 
         public QueryDefinition GenerateLatestDataDateQuery()
@@ -36,9 +65,26 @@ namespace DotnetSdkUtilities.Factory.QueryLanguageGeneratorFactory.QueryLanguage
             return new QueryDefinition("SQL Latest Data Date Query", new List<IQueryParameter>());
         }
 
-        public QueryDefinition GenerateFieldValuesQuery()
+        public QueryDefinition GenerateFieldValuesQuery(QuerySource source, string fieldName, IEnumerable<IFilterField> filterFields = null)
         {
-            return new QueryDefinition("SQL Field Values Query", new List<IQueryParameter>());
+            var queryText = $"SELECT DISTINCT {fieldName} as Value FROM {source.Name}";
+
+            // 添加過濾條件（如果有的話）
+            if (filterFields != null && filterFields.Any())
+            {
+                var filterClause = string.Join(" AND ", filterFields.Select(f => $"{f.Name} IN ({string.Join(", ", f.SpecifiedValues.Select(v => $"'{v}'"))})"));
+                queryText += $" WHERE {filterClause}";
+            }
+
+            // 按值排序
+            queryText += " ORDER BY Value";
+
+            return new QueryDefinition(queryText, source.Parameters);
+        }
+
+        public QueryDefinition GenerateSummarizeQuery()
+        {
+            return new QueryDefinition("SQL Summarize Query", new List<IQueryParameter>());
         }
     }
 }

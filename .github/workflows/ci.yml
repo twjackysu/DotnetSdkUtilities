@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main", "master", "develop" ]
+  pull_request:
+    branches: [ "main", "master", "develop" ]
+  workflow_dispatch:
+
+env:
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 8.0.x
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: windows-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --configuration ${{ env.CONFIGURATION }} --no-restore
+    
+    - name: Test
+      run: dotnet test --configuration ${{ env.CONFIGURATION }} --no-build --verbosity normal
+    
