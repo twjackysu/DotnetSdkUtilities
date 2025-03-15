@@ -153,10 +153,13 @@ namespace TestCase.Factory.QueryLanguageGeneratorFactory
             var result = generator.GenerateAllFieldsQuery(_source, excludedFields);
 
             // Assert
-            var expectedQuery = "SELECT COLUMN_NAME as ColumnName, DATA_TYPE as DataType " +
-                              "FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'TestTable' " +
-                              "AND COLUMN_NAME NOT IN ('CreatedAt', 'UpdatedAt') ORDER BY COLUMN_NAME";
-            Assert.AreEqual(expectedQuery.Replace(" ", ""), result.QueryText.Replace(" ", ""));
+            var expectedQuery = @"SELECT COLUMN_NAME as ColumnName, DATA_TYPE as DataType FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'TestTable' AND COLUMN_NAME NOT IN ('CreatedAt', 'UpdatedAt') ORDER BY COLUMN_NAME";
+
+            // 移除所有空白字符再比較
+            var normalizedExpected = string.Join("", expectedQuery.Split(new[] { ' ', '\r', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries));
+            var normalizedActual = string.Join("", result.QueryText.Split(new[] { ' ', '\r', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries));
+
+            Assert.AreEqual(normalizedExpected, normalizedActual);
         }
 
         [TestMethod]
