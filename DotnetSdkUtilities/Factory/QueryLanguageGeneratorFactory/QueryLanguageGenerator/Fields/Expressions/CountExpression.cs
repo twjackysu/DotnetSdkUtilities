@@ -4,16 +4,13 @@ namespace DotnetSdkUtilities.Factory.QueryLanguageGeneratorFactory.QueryLanguage
 {
     public class CountExpression : IMeasurementExpression
     {
-        public string Field { get; set; }
-
-        public CountExpression(string field)
+        public CountExpression()
         {
-            Field = field;
         }
 
         public string ToQuery(IQueryLanguageStrategy strategy)
         {
-            return strategy.ConvertCount(Field);
+            return strategy.ConvertCount();
         }
     }
 }

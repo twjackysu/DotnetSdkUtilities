@@ -1,21 +1,20 @@
+using DotnetSdkUtilities.Factory.QueryLanguageGeneratorFactory.QueryLanguageGenerator.Fields.Expressions.Predicates;
 using DotnetSdkUtilities.Factory.QueryLanguageGeneratorFactory.QueryLanguageGenerator.QueryLanguageStrategy;
 
 namespace DotnetSdkUtilities.Factory.QueryLanguageGeneratorFactory.QueryLanguageGenerator.Fields.Expressions
 {
     public class CountIfExpression : IMeasurementExpression
     {
-        public string Field { get; set; }
-        public string Condition { get; set; }
+        public IPredicate Predicate { get; }
 
-        public CountIfExpression(string field, string condition)
+        public CountIfExpression(IPredicate predicate)
         {
-            Field = field;
-            Condition = condition;
+            Predicate = predicate;
         }
 
         public string ToQuery(IQueryLanguageStrategy strategy)
         {
-            return strategy.ConvertCountIf(Field, Condition);
+            return strategy.ConvertCountIf(Predicate.ToQueryString(strategy));
         }
     }
 }
