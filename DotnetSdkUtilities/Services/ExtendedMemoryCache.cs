@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,23 +10,31 @@ namespace DotnetSdkUtilities.Services
 {
     public class ExtendedMemoryCache : MemoryCache, IExtendedMemoryCache
     {
-        private readonly HashSet<string> _cacheKeys;
+        // MemoryCache itself is thread-safe and is normally registered as a singleton,
+        // so the tracked key set has to tolerate concurrent access as well.
+        // The value is unused, only the key set matters.
+        private readonly ConcurrentDictionary<string, byte> _cacheKeys;
 
         public ExtendedMemoryCache(MemoryCacheOptions options) : base(options)
         {
-            _cacheKeys = new HashSet<string>();
+            _cacheKeys = new ConcurrentDictionary<string, byte>();
         }
-        public HashSet<string> Keys { 
+        public HashSet<string> Keys {
             get {
-                var keys = new HashSet<string>(_cacheKeys);
-                for(int i = 0; i < keys.Count; i++)
+                var aliveKeys = new HashSet<string>();
+                // ConcurrentDictionary.Keys returns a snapshot, so removing while iterating is safe.
+                foreach (var key in _cacheKeys.Keys)
                 {
-                    if (!base.TryGetValue(keys.ElementAt(i), out _))
+                    if (base.TryGetValue(key, out _))
                     {
-                        _cacheKeys.Remove(keys.ElementAt(i));
+                        aliveKeys.Add(key);
+                    }
+                    else
+                    {
+                        _cacheKeys.TryRemove(key, out _);
                     }
                 }
-                return _cacheKeys;
+                return aliveKeys;
             }
         }
 
@@ -34,7 +43,7 @@ namespace DotnetSdkUtilities.Services
             using ICacheEntry entry = base.CreateEntry(key);
             entry.Value = value;
 
-            _cacheKeys.Add(key.ToString());
+            _cacheKeys[key.ToString()] = 0;
             return value;
         }
 
@@ -44,7 +53,7 @@ namespace DotnetSdkUtilities.Services
             entry.AbsoluteExpiration = absoluteExpiration;
             entry.Value = value;
 
-            _cacheKeys.Add(key.ToString());
+            _cacheKeys[key.ToString()] = 0;
             return value;
         }
 
@@ -54,7 +63,7 @@ namespace DotnetSdkUtilities.Services
             entry.AbsoluteExpirationRelativeToNow = absoluteExpirationRelativeToNow;
             entry.Value = value;
 
-            _cacheKeys.Add(key.ToString());
+            _cacheKeys[key.ToString()] = 0;
             return value;
         }
 
@@ -64,7 +73,7 @@ namespace DotnetSdkUtilities.Services
             entry.AddExpirationToken(expirationToken);
             entry.Value = value;
 
-            _cacheKeys.Add(key.ToString());
+            _cacheKeys[key.ToString()] = 0;
             return value;
         }
 
@@ -77,7 +86,7 @@ namespace DotnetSdkUtilities.Services
             }
 
             entry.Value = value;
-            _cacheKeys.Add(key.ToString());
+            _cacheKeys[key.ToString()] = 0;
             return value;
         }
         public TItem GetOrCreate<TItem>(object key, Func<ICacheEntry, TItem> factory)
@@ -88,7 +97,7 @@ namespace DotnetSdkUtilities.Services
 
                 result = factory(entry);
                 entry.Value = result;
-                _cacheKeys.Add(key.ToString());
+                _cacheKeys[key.ToString()] = 0;
             }
 
             return (TItem)result;
@@ -102,7 +111,7 @@ namespace DotnetSdkUtilities.Services
 
                 result = await factory(entry).ConfigureAwait(false);
                 entry.Value = result;
-                _cacheKeys.Add(key.ToString());
+                _cacheKeys[key.ToString()] = 0;
             }
 
             return (TItem)result;
@@ -110,16 +119,16 @@ namespace DotnetSdkUtilities.Services
         public new void Remove(object key)
         {
             base.Remove(key);
-            _cacheKeys.Remove(key.ToString());
+            _cacheKeys.TryRemove(key.ToString(), out _);
         }
 
         public void ClearCacheByContains(string value)
         {
-            var keysToRemove = _cacheKeys.Where(key => key.Contains(value)).ToList();
+            var keysToRemove = _cacheKeys.Keys.Where(key => key.Contains(value)).ToList();
             foreach (var key in keysToRemove)
             {
                 base.Remove(key);
-                _cacheKeys.Remove(key);
+                _cacheKeys.TryRemove(key, out _);
             }
         }
     }
