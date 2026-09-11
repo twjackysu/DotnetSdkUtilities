@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Threading.Tasks;
 
 namespace TestCase.Services
 {
@@ -76,6 +77,32 @@ namespace TestCase.Services
 
             Assert.AreEqual(0, keys.Count); // All expired entries should be removed
             Assert.IsNull(value);           // Expired entry should return null
+        }
+
+        [TestMethod]
+        public void ShouldTrackAllKeys_WhenSetConcurrently()
+        {
+            var cache = new ExtendedMemoryCache(new MemoryCacheOptions());
+            const int itemCount = 1000;
+
+            Parallel.For(0, itemCount, i => cache.Set($"key_{i}", i));
+
+            var keys = cache.Keys;
+
+            Assert.AreEqual(itemCount, keys.Count); // No key may be lost by concurrent tracking
+        }
+
+        [TestMethod]
+        public void ShouldNotExposeInternalKeySet()
+        {
+            var cache = new ExtendedMemoryCache(new MemoryCacheOptions());
+
+            cache.Set("I", 9);
+            var keys = cache.Keys;
+            keys.Add("not_in_cache"); // Mutating the returned set must not affect the cache
+
+            Assert.AreEqual(1, cache.Keys.Count);
+            Assert.IsFalse(cache.Keys.Contains("not_in_cache"));
         }
     }
 }
